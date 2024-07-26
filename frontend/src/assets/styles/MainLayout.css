@@ -1,0 +1,35 @@
+/* MainLayout.css */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.main-header img {
+    max-height: 100px;
+}
+
+.main-header h1 {
+    margin: 0;
+}
+
+.main-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.main-nav a.active {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+}

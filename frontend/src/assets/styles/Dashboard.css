@@ -1,0 +1,79 @@
+.dashboard {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+.buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.categories {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.categories button {
+  margin: 0 5px;
+}
+
+input[type="text"] {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  width: 80%;
+  font-size: 16px;
+}
+
+.clear-filters {
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clear-filters:hover {
+  background-color: #dc3545;
+}
+
+.recipe-list {
+  margin: 20px 0;
+}
+
+.recipe-item {
+  border: 1px solid #ccc;
+  margin: 10px auto; /* Center the item horizontally */
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80%; /* Set the desired width */
+}
+
+.recipe-title {
+  font-weight: bold;
+}
+
+.recipe-details {
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.recipe-details button {
+  margin-right: 10px;
+}
