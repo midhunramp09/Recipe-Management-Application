@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import LoginPage from '../components/loginPage/LoginPage';
 import DashboardPage from '../components/dashboardPage/DashboardPage';
-import AddEditRecipePage from '../components/addEditRecipePage/AddEditRecipePage'; // Adjust import path
-import RecipeDetailsPage from '../components/recipeDetailsPage/RecipeDeatilsPage'; // Adjust import path
+import AddEditRecipePage from '../components/addEditRecipePage/AddEditRecipePage';
+import RecipeDetailsPage from '../components/recipeDetailsPage/RecipeDeatilsPage'; // Corrected import path
 
 const PublicRoutes = createBrowserRouter([
   {

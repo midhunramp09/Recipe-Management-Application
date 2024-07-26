@@ -1,8 +1,10 @@
+// src/components/dashboardPage/DashboardPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RecipeList from './RecipeList';
 import { useRecipe } from '../../services/contexts/RecipeContext';
 import '../../assets/styles/Dashboard.css';
+import { getRecipes } from '../../apis/RecipeApiCalls';
 
 const DashboardPage = () => {
     const [recipes, setRecipes] = useState([]);
@@ -12,9 +14,9 @@ const DashboardPage = () => {
     const { setSelectedRecipe } = useRecipe();
 
     useEffect(() => {
-        fetch("/recipes.json")
-            .then((response) => response.json())
-            .then((data) => setRecipes(data));
+        getRecipes()
+            .then(response => setRecipes(response.data))
+            .catch(error => console.error('Error fetching recipes:', error));
     }, []);
 
     const filteredRecipes = recipes.filter(
@@ -40,11 +42,13 @@ const DashboardPage = () => {
 
     return (
         <div className="dashboard">
-            <h1>Recipe Manager</h1>
-            <div className="buttons">
-                <button onClick={() => navigate('/add-edit-recipe')}>Add New Recipe</button>
-                <button>Logout</button>
-            </div>
+            <header className="header">
+                <h1>Recipe Manager</h1>
+                <div className="buttons">
+                    <button onClick={() => navigate('/add-edit-recipe')}>Add New Recipe</button>
+                    <button>Logout</button>
+                </div>
+            </header>
             <h2>Recipe Dashboard</h2>
             <p>Total Recipes: {recipes.length}</p>
             <div className="categories">
@@ -61,7 +65,7 @@ const DashboardPage = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <RecipeList recipes={filteredRecipes} onViewDetails={handleViewDetails} onEditRecipe={handleEdit} />
+            <RecipeList recipes={filteredRecipes} onViewDetails={handleViewDetails} onEdit={handleEdit} />
         </div>
     );
 };

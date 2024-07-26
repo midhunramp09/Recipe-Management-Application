@@ -1,7 +1,9 @@
+// src/components/recipeDetailsPage/RecipeDetailsPage.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecipe } from '../../services/contexts/RecipeContext';
 import '../../assets/styles/RecipeDetails.css';
+import { deleteRecipe } from '../../apis/RecipeApiCalls';
 
 const RecipeDetailsPage = () => {
     const navigate = useNavigate();
@@ -16,9 +18,13 @@ const RecipeDetailsPage = () => {
     };
 
     const handleDelete = () => {
-        console.log("Delete recipe with id:", selectedRecipe.id);
-        setSelectedRecipe(null);
-        navigate('/dashboard');
+        deleteRecipe(selectedRecipe.id)
+            .then(() => {
+                console.log('Recipe deleted');
+                setSelectedRecipe(null);
+                navigate('/dashboard');
+            })
+            .catch(error => console.error('Error deleting recipe:', error));
     };
 
     const handleBack = () => {
@@ -32,31 +38,24 @@ const RecipeDetailsPage = () => {
                 <h1>Recipe Manager</h1>
             </header>
             <section className="recipe-details">
-                <h2>Recipe Details</h2>
-                <p><strong>Title:</strong> {selectedRecipe.title}</p>
+                <h2>{selectedRecipe.title}</h2>
                 <p><strong>Category:</strong> {selectedRecipe.category}</p>
-                <div className="ingredients">
-                    <h3>Ingredients:</h3>
-                    <ul>
-                        {selectedRecipe.ingredients.map((ingredient, index) => (
-                            <li key={index}>{ingredient}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="instructions">
-                    <h3>Instructions:</h3>
-                    <ul>
-                        {selectedRecipe.instructions.map((step, index) => (
-                            <li key={index}>{step}</li>
-                        ))}
-                    </ul>
-                </div>
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    {selectedRecipe.ingredients.map((ingredient, index) => (
+                        <li key={index}>{ingredient}</li>
+                    ))}
+                </ul>
+                <p><strong>Instructions:</strong></p>
+                <ul>
+                    {selectedRecipe.instructions.map((instruction, index) => (
+                        <li key={index}>{instruction}</li>
+                    ))}
+                </ul>
                 <p><strong>Date:</strong> {selectedRecipe.date}</p>
+                <button onClick={handleEdit}>Edit Recipe</button>
+                <button onClick={handleDelete}>Delete Recipe</button>
             </section>
-            <footer className="footer">
-                <button className="edit-button" onClick={handleEdit}>Edit</button>
-                <button className="delete-button" onClick={handleDelete}>Delete</button>
-            </footer>
         </div>
     );
 };
