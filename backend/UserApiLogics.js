@@ -9,7 +9,6 @@ let users = JSON.parse(fs.readFileSync(FILE_PATH, "utf8"));
 // Authenticate user
 const authenticateUser = (req, res) => {
     const { username, password } = req.body;
-    console.log(username, password);
     const user = users.find((u) => u.username === username && u.password === password);
     if (user) {
         res.json({ authenticated: true });
