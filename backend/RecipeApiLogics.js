@@ -3,7 +3,7 @@ const path = require("path");
 
 const FILE_PATH = path.join(__dirname, "recipe.json");
 
-// Load initial data from JSON file
+// Load initial data from JSON file into an in-memory array
 let recipes = JSON.parse(fs.readFileSync(FILE_PATH, "utf8"));
 
 // Get all recipes
@@ -13,7 +13,7 @@ const getAllRecipes = (req, res) => {
 
 // Get a single recipe by ID
 const getRecipeById = (req, res) => {
-  const recipe = recipes.find((r) => r.id === req.params.id);
+  const recipe = recipes.find((r) => r.id === parseInt(req.params.id, 10));
   if (recipe) {
     res.json(recipe);
   } else {
@@ -31,7 +31,7 @@ const createRecipe = (req, res) => {
 // Update a recipe
 const updateRecipe = (req, res) => {
   const updatedRecipe = req.body;
-  const index = recipes.findIndex((r) => r.id === req.params.id);
+  const index = recipes.findIndex((r) => r.id === parseInt(req.params.id, 10));
 
   if (index !== -1) {
     recipes[index] = updatedRecipe;
@@ -43,8 +43,9 @@ const updateRecipe = (req, res) => {
 
 // Delete a recipe
 const deleteRecipe = (req, res) => {
-  recipes = recipes.filter((r) => r.id !== req.params.id);
-  res.status(204).send();
+  const id = parseInt(req.params.id, 10);
+  recipes = recipes.filter((r) => r.id !== id);
+  res.status(204).send(); // Send no content status
 };
 
 module.exports = {

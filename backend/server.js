@@ -1,16 +1,13 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const recipeApiLogics = require('./RecipeApiLogics');
+const userApiLogics = require('./UserApiLogics');
 
 const app = express();
 const PORT = 5000;
 
-// Use cors middleware to enable CORS
-app.use(cors()); // Allow all origins by default
-
+app.use(cors());
 app.use(bodyParser.json());
 
 // Define API routes
@@ -20,6 +17,9 @@ app.post('/recipes', recipeApiLogics.createRecipe);
 app.put('/recipes/:id', recipeApiLogics.updateRecipe);
 app.delete('/recipes/:id', recipeApiLogics.deleteRecipe);
 
+// User authentication route
+app.post('/login', userApiLogics.authenticateUser);
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
