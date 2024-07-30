@@ -1,4 +1,3 @@
-// src/components/dashboardPage/DashboardPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RecipeList from './RecipeList';
@@ -10,13 +9,24 @@ const DashboardPage = () => {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("");
+    const [noRecipesFound, setNoRecipesFound] = useState(false); // Add state for no recipes
     const navigate = useNavigate();
     const { setSelectedRecipe } = useRecipe();
 
     useEffect(() => {
         getRecipes()
-            .then(response => setRecipes(response.data))
-            .catch(error => console.error('Error fetching recipes:', error));
+            .then(response => {
+                if (response.data.length === 0) {
+                    setNoRecipesFound(true);
+                } else {
+                    setRecipes(response.data);
+                    setNoRecipesFound(false);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching recipes:', error);
+                setNoRecipesFound(true); // Set to true in case of an error
+            });
     }, []);
 
     const filteredRecipes = recipes.filter(
@@ -30,11 +40,6 @@ const DashboardPage = () => {
         navigate(`/recipe-details/${recipe.id}`);
     };
 
-    const handleEdit = (recipe) => {
-        setSelectedRecipe(recipe);
-        navigate(`/add-edit-recipe/${recipe.id}`);
-    };
-
     const clearFilters = () => {
         setSearch("");
         setCategoryFilter("");
@@ -42,13 +47,6 @@ const DashboardPage = () => {
 
     return (
         <div className="dashboard">
-            <header className="header">
-                <h1>Recipe Manager</h1>
-                <div className="buttons">
-                    <button onClick={() => navigate('/add-edit-recipe')}>Add New Recipe</button>
-                    <button>Logout</button>
-                </div>
-            </header>
             <h2>Recipe Dashboard</h2>
             <p>Total Recipes: {recipes.length}</p>
             <div className="categories">
@@ -65,7 +63,11 @@ const DashboardPage = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <RecipeList recipes={filteredRecipes} onViewDetails={handleViewDetails} onEdit={handleEdit} />
+            {noRecipesFound ? (
+                <p>No recipes found</p> // Display message if no recipes
+            ) : (
+                <RecipeList recipes={filteredRecipes} onViewDetails={handleViewDetails} />
+            )}
         </div>
     );
 };

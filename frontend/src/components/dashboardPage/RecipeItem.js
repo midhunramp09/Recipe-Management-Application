@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../assets/styles/Dashboard.css";
 
-const RecipeItem = ({ recipe, onViewDetails, onEditRecipe }) => {
+const RecipeItem = ({ recipe, onViewDetails }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -14,7 +14,6 @@ const RecipeItem = ({ recipe, onViewDetails, onEditRecipe }) => {
           <p>Title: {recipe.title}</p>
           <p>Category: {recipe.category}</p>
           <button onClick={() => onViewDetails(recipe)}>View Details</button>
-          <button onClick={() => onEditRecipe(recipe)}>Edit</button>
         </div>
       )}
     </div>

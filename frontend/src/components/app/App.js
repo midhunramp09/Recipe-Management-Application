@@ -50,18 +50,29 @@
 
 // export default App;
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import '../../assets/styles/App.css';
-import PublicRoutes from '../../routes/PublicRoutes';
 import { RecipeProvider } from '../../services/contexts/RecipeContext';
+import UserAuthContext from '../../services/contexts/UserAuthContext';
+import AppRoutes from '../../routes/AppRoutes';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedInDataInLocalStorage = localStorage.getItem("loggedIn");
+    const loggedInData = loggedInDataInLocalStorage ? true : false;
+    setLoggedIn(loggedInData);
+  }, []);
+
   return (
     <div className="App">
-      <RecipeProvider>
-        <RouterProvider router={PublicRoutes} />
-      </RecipeProvider>
+      <UserAuthContext.Provider value={{ loggedIn, setLoggedIn }}>
+        <RecipeProvider>
+          <RouterProvider router={AppRoutes(loggedIn)} />
+        </RecipeProvider>
+      </UserAuthContext.Provider>
     </div>
   );
 }

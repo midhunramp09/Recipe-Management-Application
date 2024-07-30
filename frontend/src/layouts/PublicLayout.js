@@ -1,13 +1,12 @@
-// src/layouts/MainLayout.js
 import { Outlet } from 'react-router-dom';
-import Header from '../components/headerFooter/Header';
+import PublicHeader from '../components/headerFooter/PublicHeader';
 import Footer from '../components/headerFooter/Footer';
 import '../assets/styles/MainLayout.css'; // Ensure you have a stylesheet for layout
 
-const MainLayout = () => {
+const PublicLayout = () => {
     return (
         <div>
-            <Header />
+            <PublicHeader />
             <hr />
             <main>
                 <Outlet />
@@ -18,4 +17,4 @@ const MainLayout = () => {
     );
 };
 
-export default MainLayout;
+export default PublicLayout;

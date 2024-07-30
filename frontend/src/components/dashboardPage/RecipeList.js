@@ -2,7 +2,7 @@ import React from "react";
 import RecipeItem from "./RecipeItem";
 import '../../assets/styles/Dashboard.css'
 
-const RecipeList = ({ recipes, onViewDetails, onEditRecipe }) => {
+const RecipeList = ({ recipes, onViewDetails }) => {
   return (
     <div className="recipe-list">
       <h2>Recipe List</h2>
@@ -11,7 +11,6 @@ const RecipeList = ({ recipes, onViewDetails, onEditRecipe }) => {
           key={recipe.id}
           recipe={recipe}
           onViewDetails={onViewDetails}
-          onEditRecipe={onEditRecipe}
         />
       ))}
     </div>
