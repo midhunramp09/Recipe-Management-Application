@@ -16,6 +16,14 @@ const AddEditRecipePage = () => {
     const [instructions, setInstructions] = useState('');
     const [date, setDate] = useState('');
 
+    const [errors, setErrors] = useState({
+        title: '',
+        category: '',
+        ingredients: '',
+        instructions: '',
+        date: ''
+    });
+
     useEffect(() => {
         if (id && selectedRecipe) {
             setTitle(selectedRecipe.title);
@@ -26,7 +34,50 @@ const AddEditRecipePage = () => {
         }
     }, [id, selectedRecipe]);
 
+    const validateForm = () => {
+        let valid = true;
+        const newErrors = {
+            title: '',
+            category: '',
+            ingredients: '',
+            instructions: '',
+            date: ''
+        };
+
+        if (!title) {
+            newErrors.title = 'Title is required';
+            valid = false;
+        }
+
+        if (!category) {
+            newErrors.category = 'Category is required';
+            valid = false;
+        }
+
+        if (!ingredients) {
+            newErrors.ingredients = 'Ingredients are required';
+            valid = false;
+        }
+
+        if (!instructions) {
+            newErrors.instructions = 'Instructions are required';
+            valid = false;
+        }
+
+        if (!date) {
+            newErrors.date = 'Date is required';
+            valid = false;
+        }
+
+        setErrors(newErrors);
+        return valid;
+    };
+
     const handleSave = () => {
+        if (!validateForm()) {
+            return;
+        }
+
         const updatedRecipe = {
             title,
             category,
@@ -63,23 +114,46 @@ const AddEditRecipePage = () => {
         <div className="recipe-form">
             <div className="form-group">
                 <label>Title:</label>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                {errors.title && <p className="error-message">{errors.title}</p>}
             </div>
             <div className="form-group">
                 <label>Category:</label>
-                <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+                <input
+                    type="text"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                />
+                {errors.category && <p className="error-message">{errors.category}</p>}
             </div>
             <div className="form-group">
                 <label>Ingredients:</label>
-                <textarea value={ingredients} onChange={(e) => setIngredients(e.target.value)} />
+                <textarea
+                    value={ingredients}
+                    onChange={(e) => setIngredients(e.target.value)}
+                />
+                {errors.ingredients && <p className="error-message">{errors.ingredients}</p>}
             </div>
             <div className="form-group">
                 <label>Instructions:</label>
-                <textarea value={instructions} onChange={(e) => setInstructions(e.target.value)} />
+                <textarea
+                    value={instructions}
+                    onChange={(e) => setInstructions(e.target.value)}
+                />
+                {errors.instructions && <p className="error-message">{errors.instructions}</p>}
             </div>
             <div className="form-group">
                 <label>Date:</label>
-                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                />
+                {errors.date && <p className="error-message">{errors.date}</p>}
             </div>
             <button onClick={handleSave}>Save</button>
             <button onClick={handleCancel}>Cancel</button>
