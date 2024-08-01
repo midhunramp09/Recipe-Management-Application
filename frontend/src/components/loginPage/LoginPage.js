@@ -1,19 +1,21 @@
-import React, { useContext, useState } from 'react';
+// src/pages/LoginPage.js
+
+import React, { useContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../apis/RecipeApiCalls';
 import "../../assets/styles/Login.css";
 import UserAuthContext from '../../services/contexts/UserAuthContext';
+import { loginReducer, initialState } from '../../services/reducers/LoginReducer';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [state, dispatch] = useReducer(loginReducer, initialState);
+  const { username, password, error } = state;
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(UserAuthContext);
 
   const handleLogin = async () => {
     if (!username || !password) {
-      setError('Username and password are required');
+      dispatch({ type: 'SET_ERROR', payload: 'Username and password are required' });
       return;
     }
 
@@ -24,10 +26,10 @@ const LoginPage = () => {
         setLoggedIn(true);
         navigate('/dashboard');
       } else {
-        setError('Invalid username or password');
+        dispatch({ type: 'SET_ERROR', payload: 'Invalid username or password' });
       }
     } catch (err) {
-      setError(err.message);
+      dispatch({ type: 'SET_ERROR', payload: err.message });
     }
   };
 
@@ -43,7 +45,7 @@ const LoginPage = () => {
             name="username"
             className="input"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => dispatch({ type: 'SET_USERNAME', payload: e.target.value })}
           />
         </div>
         <div className="formGroup">
@@ -54,7 +56,7 @@ const LoginPage = () => {
             name="password"
             className="input"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => dispatch({ type: 'SET_PASSWORD', payload: e.target.value })}
           />
         </div>
         {error && <p className="error">{error}</p>}

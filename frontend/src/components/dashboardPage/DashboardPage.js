@@ -1,38 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RecipeList from './RecipeList';
 import { useRecipe } from '../../services/contexts/RecipeContext';
 import '../../assets/styles/Dashboard.css';
 import { getRecipes } from '../../apis/RecipeApiCalls';
+import { initialState, dashboardReducer } from '../../services/reducers/DashboardReducer';
 
 const DashboardPage = () => {
-    const [recipes, setRecipes] = useState([]);
-    const [search, setSearch] = useState("");
-    const [categoryFilter, setCategoryFilter] = useState("");
-    const [noRecipesFound, setNoRecipesFound] = useState(false); // Add state for no recipes
+    const [state, dispatch] = useReducer(dashboardReducer, initialState);
     const navigate = useNavigate();
     const { setSelectedRecipe } = useRecipe();
 
     useEffect(() => {
         getRecipes()
             .then(response => {
-                if (response.data.length === 0) {
-                    setNoRecipesFound(true);
-                } else {
-                    setRecipes(response.data);
-                    setNoRecipesFound(false);
-                }
+                dispatch({ type: 'SET_RECIPES', payload: response.data });
             })
             .catch(error => {
                 console.error('Error fetching recipes:', error);
-                setNoRecipesFound(true); // Set to true in case of an error
+                dispatch({ type: 'SET_NO_RECIPES_FOUND', payload: true });
             });
     }, []);
 
-    const filteredRecipes = recipes.filter(
+    const filteredRecipes = state.recipes.filter(
         (recipe) =>
-            recipe.title.toLowerCase().includes(search.toLowerCase()) &&
-            (!categoryFilter || recipe.category === categoryFilter)
+            recipe.title.toLowerCase().includes(state.search.toLowerCase()) &&
+            (!state.categoryFilter || recipe.category === state.categoryFilter)
     );
 
     const handleViewDetails = (recipe) => {
@@ -41,30 +34,29 @@ const DashboardPage = () => {
     };
 
     const clearFilters = () => {
-        setSearch("");
-        setCategoryFilter("");
+        dispatch({ type: 'CLEAR_FILTERS' });
     };
 
     return (
         <div className="dashboard">
             <h2>Recipe Dashboard</h2>
-            <p>Total Recipes: {recipes.length}</p>
+            <p>Total Recipes: {state.recipes.length}</p>
             <div className="categories">
                 Categories:
-                <button onClick={() => setCategoryFilter("Breakfast")}>Breakfast</button>
-                <button onClick={() => setCategoryFilter("Lunch")}>Lunch</button>
-                <button onClick={() => setCategoryFilter("Dinner")}>Dinner</button>
-                <button onClick={() => setCategoryFilter("Dessert")}>Dessert</button>
+                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Breakfast" })}>Breakfast</button>
+                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Lunch" })}>Lunch</button>
+                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Dinner" })}>Dinner</button>
+                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Dessert" })}>Dessert</button>
                 <button className="clear-filters" onClick={clearFilters}>Clear Filter</button>
             </div>
             <input
                 type="text"
                 placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={state.search}
+                onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
             />
-            {noRecipesFound ? (
-                <p>No recipes found</p> // Display message if no recipes
+            {state.noRecipesFound ? (
+                <p>No recipes found</p>
             ) : (
                 <RecipeList recipes={filteredRecipes} onViewDetails={handleViewDetails} />
             )}

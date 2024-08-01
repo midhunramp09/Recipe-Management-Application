@@ -1,36 +1,23 @@
-// src/components/addEditRecipePage/AddEditRecipePage.js
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecipe } from '../../services/contexts/RecipeContext';
 import '../../assets/styles/AddEditRecipe.css';
 import { createRecipe, updateRecipe } from '../../apis/RecipeApiCalls';
+import { addEditRecipeReducer, initialState, ADD_EDIT_RECIPE_ACTIONS } from '../../services/reducers/AddEditRecipeReducer';
 
 const AddEditRecipePage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { selectedRecipe, setSelectedRecipe } = useRecipe();
-
-    const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('');
-    const [ingredients, setIngredients] = useState('');
-    const [instructions, setInstructions] = useState('');
-    const [date, setDate] = useState('');
-
-    const [errors, setErrors] = useState({
-        title: '',
-        category: '',
-        ingredients: '',
-        instructions: '',
-        date: ''
-    });
+    const [state, dispatch] = useReducer(addEditRecipeReducer, initialState);
 
     useEffect(() => {
         if (id && selectedRecipe) {
-            setTitle(selectedRecipe.title);
-            setCategory(selectedRecipe.category);
-            setIngredients(selectedRecipe.ingredients.join(', '));
-            setInstructions(selectedRecipe.instructions.join(', '));
-            setDate(selectedRecipe.date);
+            dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'title', value: selectedRecipe.title });
+            dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'category', value: selectedRecipe.category });
+            dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'ingredients', value: selectedRecipe.ingredients.join(', ') });
+            dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'instructions', value: selectedRecipe.instructions.join(', ') });
+            dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'date', value: selectedRecipe.date });
         }
     }, [id, selectedRecipe]);
 
@@ -44,32 +31,32 @@ const AddEditRecipePage = () => {
             date: ''
         };
 
-        if (!title) {
+        if (!state.title) {
             newErrors.title = 'Title is required';
             valid = false;
         }
 
-        if (!category) {
+        if (!state.category) {
             newErrors.category = 'Category is required';
             valid = false;
         }
 
-        if (!ingredients) {
+        if (!state.ingredients) {
             newErrors.ingredients = 'Ingredients are required';
             valid = false;
         }
 
-        if (!instructions) {
+        if (!state.instructions) {
             newErrors.instructions = 'Instructions are required';
             valid = false;
         }
 
-        if (!date) {
+        if (!state.date) {
             newErrors.date = 'Date is required';
             valid = false;
         }
 
-        setErrors(newErrors);
+        dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_ERRORS, errors: newErrors });
         return valid;
     };
 
@@ -79,11 +66,11 @@ const AddEditRecipePage = () => {
         }
 
         const updatedRecipe = {
-            title,
-            category,
-            ingredients: ingredients.split(', '),
-            instructions: instructions.split(', '),
-            date
+            title: state.title,
+            category: state.category,
+            ingredients: state.ingredients.split(', '),
+            instructions: state.instructions.split(', '),
+            date: state.date
         };
 
         if (id) {
@@ -116,44 +103,44 @@ const AddEditRecipePage = () => {
                 <label>Title:</label>
                 <input
                     type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={state.title}
+                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'title', value: e.target.value })}
                 />
-                {errors.title && <p className="error-message">{errors.title}</p>}
+                {state.errors.title && <p className="error-message">{state.errors.title}</p>}
             </div>
             <div className="form-group">
                 <label>Category:</label>
                 <input
                     type="text"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    value={state.category}
+                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'category', value: e.target.value })}
                 />
-                {errors.category && <p className="error-message">{errors.category}</p>}
+                {state.errors.category && <p className="error-message">{state.errors.category}</p>}
             </div>
             <div className="form-group">
                 <label>Ingredients:</label>
                 <textarea
-                    value={ingredients}
-                    onChange={(e) => setIngredients(e.target.value)}
+                    value={state.ingredients}
+                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'ingredients', value: e.target.value })}
                 />
-                {errors.ingredients && <p className="error-message">{errors.ingredients}</p>}
+                {state.errors.ingredients && <p className="error-message">{state.errors.ingredients}</p>}
             </div>
             <div className="form-group">
                 <label>Instructions:</label>
                 <textarea
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
+                    value={state.instructions}
+                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'instructions', value: e.target.value })}
                 />
-                {errors.instructions && <p className="error-message">{errors.instructions}</p>}
+                {state.errors.instructions && <p className="error-message">{state.errors.instructions}</p>}
             </div>
             <div className="form-group">
                 <label>Date:</label>
                 <input
                     type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    value={state.date}
+                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'date', value: e.target.value })}
                 />
-                {errors.date && <p className="error-message">{errors.date}</p>}
+                {state.errors.date && <p className="error-message">{state.errors.date}</p>}
             </div>
             <button onClick={handleSave}>Save</button>
             <button onClick={handleCancel}>Cancel</button>
