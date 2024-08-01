@@ -71,7 +71,7 @@ button {
   border: 1px solid #fff;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.5);
-  color: #000000;
+  color: #ffffff;
 }
 
 .clear-filters {
@@ -99,7 +99,7 @@ button {
   margin: 10px auto;
   padding: 10px;
   border-radius: 5px;
-  width: 60%;
+  width: 35%;
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   box-sizing: border-box;
@@ -113,7 +113,7 @@ button {
   margin-bottom: 5px;
 }
 
-.recipe-details {
+.dashboard-recipe-details {
   padding: 10px;
   border-top: 1px solid #fff;
   text-align: left;
@@ -126,11 +126,11 @@ button {
   align-items: center;
 }
 
-.recipe-details p {
+.dashboard-recipe-details p {
   margin: 0;
 }
 
-.recipe-details button {
+.dashboard-recipe-details button {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid #fff;

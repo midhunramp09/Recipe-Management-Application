@@ -7,7 +7,7 @@ const RecipeItem = ({ recipe, onViewDetails }) => {
             <div className="recipe-title">
                 {recipe.title}
             </div>
-            <div className="recipe-details">
+            <div className="dashboard-recipe-details">
                 <div className="recipe-info">
                     <p>Title: {recipe.title}</p>
                     <p>Category: {recipe.category}</p>

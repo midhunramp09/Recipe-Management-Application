@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useReducer, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import "../../assets/styles/App.css";
