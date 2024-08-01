@@ -1,10 +1,39 @@
 .dashboard {
   padding: 20px;
   font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 1;
+  color: #fff;
 }
 
-h1 {
-  text-align: center;
+.dashboard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://guidable.co/wp-content/uploads/2018/10/fake-plastic-food-1487542_1920.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+}
+
+.dashboard h2, .dashboard p {
+  text-align: left;
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+}
+
+.header-filter-spacing {
+  margin-bottom: 20px;
 }
 
 .buttons {
@@ -16,27 +45,37 @@ button {
   margin: 0 10px;
   padding: 10px 20px;
   font-size: 16px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #fff;
+  border-radius: 5px;
 }
 
-.categories {
-  text-align: center;
+.categories-search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.categories button {
-  margin: 0 5px;
+.categories {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
-input[type="text"] {
-  display: block;
-  margin: 20px auto;
+.categories-search input[type="text"] {
   padding: 10px;
-  width: 80%;
   font-size: 16px;
+  width: 30%;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #000000;
 }
 
 .clear-filters {
-  margin: 20px auto;
+  margin-left: 20px;
   padding: 10px 20px;
   font-size: 16px;
   background-color: #dc3545;
@@ -44,10 +83,11 @@ input[type="text"] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  align-self: center;
 }
 
 .clear-filters:hover {
-  background-color: #dc3545;
+  background-color: #c82333;
 }
 
 .recipe-list {
@@ -55,24 +95,45 @@ input[type="text"] {
 }
 
 .recipe-item {
-  border: 1px solid #ccc;
-  margin: 10px auto; /* Center the item horizontally */
+  border: 1px solid #fff;
+  margin: 10px auto;
   padding: 10px;
   border-radius: 5px;
-  cursor: pointer;
-  width: 80%; /* Set the desired width */
+  width: 60%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .recipe-title {
+  padding-left: 10px;
   font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .recipe-details {
-  margin-top: 10px;
   padding: 10px;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #fff;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipe-details p {
+  margin: 0;
 }
 
 .recipe-details button {
-  margin-right: 10px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
 }

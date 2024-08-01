@@ -6,6 +6,8 @@ import '../../assets/styles/Dashboard.css';
 import { getRecipes } from '../../apis/RecipeApiCalls';
 import { initialState, dashboardReducer } from '../../services/reducers/DashboardReducer';
 
+const CATEGORIES = ['Breakfast', 'Lunch', 'Dinner', 'Dessert'];
+
 const DashboardPage = () => {
     const [state, dispatch] = useReducer(dashboardReducer, initialState);
     const navigate = useNavigate();
@@ -38,23 +40,31 @@ const DashboardPage = () => {
     };
 
     return (
-        <div className="dashboard">
-            <h2>Recipe Dashboard</h2>
-            <p>Total Recipes: {state.recipes.length}</p>
-            <div className="categories">
-                Categories:
-                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Breakfast" })}>Breakfast</button>
-                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Lunch" })}>Lunch</button>
-                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Dinner" })}>Dinner</button>
-                <button onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: "Dessert" })}>Dessert</button>
-                <button className="clear-filters" onClick={clearFilters}>Clear Filter</button>
+        <div className="dashboard dashboard-background">
+            <div className="dashboard-header header-filter-spacing">
+                <h2>Recipe Dashboard</h2>
+                <p>Total Recipes: {state.recipes.length}</p>
             </div>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={state.search}
-                onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
-            />
+            <div className="categories-search">
+                <div className="categories">
+                    Filters:
+                    {CATEGORIES.map((category) => (
+                        <button
+                            key={category}
+                            onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: category })}
+                        >
+                            {category}
+                        </button>
+                    ))}
+                    <button className="clear-filters" onClick={clearFilters}>Clear Filter</button>
+                </div>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={state.search}
+                    onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
+                />
+            </div>
             {state.noRecipesFound ? (
                 <p>No recipes found</p>
             ) : (
