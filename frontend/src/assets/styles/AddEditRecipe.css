@@ -1,61 +1,61 @@
-/* src/components/AddEditRecipePage.css */
-.recipe-form {
-  max-width: 600px;
+/* AddEditRecipePage.css */
+.page-container {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://guidable.co/wp-content/uploads/2018/10/fake-plastic-food-1487542_1920.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.form-container {
+  max-width: 450px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-.header {
-  font-size: 24px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.back-button {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.back-button:hover {
-  background-color: #0056b3;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 1;
 }
 
 .form-group {
-  margin-bottom: 20px; /* Increased spacing between form groups */
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  text-align: left;
+  color: #000;
 }
 
-input[type="text"],
-textarea,
-input[type="date"] {
-  width: 100%;
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="date"] {
+  width: calc(100% - 22px);
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box; /* Ensures padding is included in the width */
+  box-sizing: border-box;
 }
 
-textarea {
-  height: 100px;
+.form-group textarea {
+  height: 80px;
   resize: vertical;
 }
 

@@ -98,52 +98,56 @@ const AddEditRecipePage = () => {
     };
 
     return (
-        <div className="recipe-form">
-            <div className="form-group">
-                <label>Title:</label>
-                <input
-                    type="text"
-                    value={state.title}
-                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'title', value: e.target.value })}
-                />
-                {state.errors.title && <p className="error-message">{state.errors.title}</p>}
+        <div className="page-container">
+            <div className="form-container">
+                <div className="form-group">
+                    <label>Title:</label>
+                    <input
+                        type="text"
+                        value={state.title}
+                        onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'title', value: e.target.value })}
+                    />
+                    {state.errors.title && <p className="error-message">{state.errors.title}</p>}
+                </div>
+                <div className="form-group">
+                    <label>Category:</label>
+                    <input
+                        type="text"
+                        value={state.category}
+                        onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'category', value: e.target.value })}
+                    />
+                    {state.errors.category && <p className="error-message">{state.errors.category}</p>}
+                </div>
+                <div className="form-group">
+                    <label>Ingredients: (use , to separate)</label>
+                    <textarea
+                        value={state.ingredients}
+                        onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'ingredients', value: e.target.value })}
+                    />
+                    {state.errors.ingredients && <p className="error-message">{state.errors.ingredients}</p>}
+                </div>
+                <div className="form-group">
+                    <label>Instructions: (use , to separate)</label>
+                    <textarea
+                        value={state.instructions}
+                        onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'instructions', value: e.target.value })}
+                    />
+                    {state.errors.instructions && <p className="error-message">{state.errors.instructions}</p>}
+                </div>
+                <div className="form-group">
+                    <label>Date:</label>
+                    <input
+                        type="date"
+                        value={state.date}
+                        onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'date', value: e.target.value })}
+                    />
+                    {state.errors.date && <p className="error-message">{state.errors.date}</p>}
+                </div>
+                <div className="button-group">
+                    <button className="save-button" onClick={handleSave}>Save</button>
+                    <button className="cancel-button" onClick={handleCancel}>Cancel</button>
+                </div>
             </div>
-            <div className="form-group">
-                <label>Category:</label>
-                <input
-                    type="text"
-                    value={state.category}
-                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'category', value: e.target.value })}
-                />
-                {state.errors.category && <p className="error-message">{state.errors.category}</p>}
-            </div>
-            <div className="form-group">
-                <label>Ingredients:</label>
-                <textarea
-                    value={state.ingredients}
-                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'ingredients', value: e.target.value })}
-                />
-                {state.errors.ingredients && <p className="error-message">{state.errors.ingredients}</p>}
-            </div>
-            <div className="form-group">
-                <label>Instructions:</label>
-                <textarea
-                    value={state.instructions}
-                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'instructions', value: e.target.value })}
-                />
-                {state.errors.instructions && <p className="error-message">{state.errors.instructions}</p>}
-            </div>
-            <div className="form-group">
-                <label>Date:</label>
-                <input
-                    type="date"
-                    value={state.date}
-                    onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'date', value: e.target.value })}
-                />
-                {state.errors.date && <p className="error-message">{state.errors.date}</p>}
-            </div>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
         </div>
     );
 };
