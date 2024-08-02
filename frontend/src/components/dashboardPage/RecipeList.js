@@ -4,7 +4,7 @@ import '../../assets/styles/Dashboard.css'
 
 const RecipeList = ({ recipes, onViewDetails }) => {
   return (
-    <div className="recipe-list">
+    <div className="dashboardRecipe-list">
       {recipes.map((recipe) => (
         <RecipeItem
           key={recipe.id}

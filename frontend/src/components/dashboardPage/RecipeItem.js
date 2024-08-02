@@ -3,12 +3,12 @@ import "../../assets/styles/Dashboard.css";
 
 const RecipeItem = ({ recipe, onViewDetails }) => {
     return (
-        <div className="recipe-item">
-            <div className="recipe-title">
+        <div className="dashboardRecipe-item">
+            <div className="dashboardRecipe-title">
                 {recipe.title}
             </div>
-            <div className="dashboard-recipe-details">
-                <div className="recipe-info">
+            <div className="dashboardRecipe-details">
+                <div className="dashboardRecipe-info">
                     <p>Title: {recipe.title}</p>
                     <p>Category: {recipe.category}</p>
                 </div>

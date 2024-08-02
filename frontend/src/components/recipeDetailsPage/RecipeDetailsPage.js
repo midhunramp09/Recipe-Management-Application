@@ -73,7 +73,7 @@ const RecipeDetailsPage = () => {
             <span className="date-data">{state.selectedRecipe.date}</span>
           </p>
         </div>
-        <footer className="recipe-details-footer">
+        <div className="recipe-details-buttons">
           <button className="back-button" onClick={handleBack}>
             Back
           </button>
@@ -85,7 +85,7 @@ const RecipeDetailsPage = () => {
               Delete Recipe
             </button>
           </div>
-        </footer>
+        </div>
       </section>
     </div>
   );

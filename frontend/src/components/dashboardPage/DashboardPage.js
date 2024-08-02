@@ -41,12 +41,12 @@ const DashboardPage = () => {
 
     return (
         <div className="dashboard dashboard-background">
-            <div className="dashboard-header header-filter-spacing">
+            <div className="dashboard-header dashboardHeader-filter-spacing">
                 <h2>Recipe Dashboard</h2>
                 <p>Total Recipes: {state.recipes.length}</p>
             </div>
-            <div className="categories-search">
-                <div className="categories">
+            <div className="dashboardCategories-search">
+                <div className="dashboardCategories">
                     Filters:
                     {CATEGORIES.map((category) => (
                         <button
@@ -56,7 +56,7 @@ const DashboardPage = () => {
                             {category}
                         </button>
                     ))}
-                    <button className="clear-filters" onClick={clearFilters}>Clear Filter</button>
+                    <button className="dashboardClear-filters" onClick={clearFilters}>Clear Filter</button>
                 </div>
                 <input
                     type="text"

@@ -1,11 +1,10 @@
-/* AddEditRecipePage.css */
-.page-container {
+.addEditPage-container {
   position: relative;
   z-index: 1;
   color: #fff;
 }
 
-.page-container::before {
+.addEditPage-container::before {
   content: "";
   position: absolute;
   top: 0;
@@ -19,34 +18,34 @@
   z-index: -1;
 }
 
-.form-container {
+.addEditForm-container {
   max-width: 450px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 1;
 }
 
-.form-group {
+.addEditForm-group {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
 
-.form-group label {
+.addEditForm-group label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: normal;
   text-align: left;
-  color: #000;
+  color: #ffffff;
 }
 
-.form-group input[type="text"],
-.form-group textarea,
-.form-group input[type="date"] {
+.addEditForm-group input[type="text"],
+.addEditForm-group textarea,
+.addEditForm-group input[type="date"] {
   width: calc(100% - 22px);
   padding: 10px;
   border: 1px solid #ddd;
@@ -54,22 +53,22 @@
   box-sizing: border-box;
 }
 
-.form-group textarea {
+.addEditForm-group textarea {
   height: 80px;
   resize: vertical;
 }
 
-.error-message {
+.addEditError-message {
   color: red;
   font-size: 0.875em;
 }
 
-.button-group {
+.addEditButton-group {
   text-align: center;
 }
 
-.save-button,
-.cancel-button {
+.addEditSave-button,
+.addEditCancel-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -77,20 +76,20 @@
   margin: 0 5px;
 }
 
-.save-button {
+.addEditSave-button {
   background-color: #28a745;
   color: white;
 }
 
-.save-button:hover {
+.addEditSave-button:hover {
   background-color: #218838;
 }
 
-.cancel-button {
+.addEditCancel-button {
   background-color: #dc3545;
   color: white;
 }
 
-.cancel-button:hover {
+.addEditCancel-button:hover {
   background-color: #c82333;
 }
