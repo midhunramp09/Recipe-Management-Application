@@ -1,5 +1,3 @@
-// src/pages/LoginPage.js
-
 import React, { useContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../apis/RecipeApiCalls';
@@ -34,34 +32,33 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="title">Recipe Manager</h1>
-      <div className="form">
-        <div className="formGroup">
+    <div className="loginContainer">
+      <h1 className="loginTitle">Login</h1>
+      <div className="loginForm">
+        <div className="loginFormGroup">
           <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
             name="username"
-            className="input"
+            className="loginInput"
             value={username}
             onChange={(e) => dispatch({ type: 'SET_USERNAME', payload: e.target.value })}
           />
         </div>
-        <div className="formGroup">
+        <div className="loginFormGroup">
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             name="password"
-            className="input"
+            className="loginInput"
             value={password}
             onChange={(e) => dispatch({ type: 'SET_PASSWORD', payload: e.target.value })}
           />
         </div>
-        {error && <p className="error">{error}</p>}
-        <button className="button" onClick={handleLogin}>Login</button>
-        <a href="/register" className="registerLink">Register</a>
+        {error && <p className="loginError">{error}</p>}
+          <button className="loginButton" onClick={handleLogin}>Login</button>
       </div>
     </div>
   );
