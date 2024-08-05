@@ -5,6 +5,7 @@ import { useRecipe } from '../../services/contexts/RecipeContext';
 import '../../assets/styles/Dashboard.css';
 import { getRecipes } from '../../apis/RecipeApiCalls';
 import { initialState, dashboardReducer } from '../../services/reducers/DashboardReducer';
+import DASHBOARD_ACTIONS from '../../services/actions/DashboardActions';
 
 const CATEGORIES = ['Breakfast', 'Lunch', 'Dinner', 'Dessert'];
 
@@ -16,11 +17,11 @@ const DashboardPage = () => {
     useEffect(() => {
         getRecipes()
             .then(response => {
-                dispatch({ type: 'SET_RECIPES', payload: response.data });
+                dispatch({ type: DASHBOARD_ACTIONS.SET_RECIPES, payload: response.data });
             })
             .catch(error => {
                 console.error('Error fetching recipes:', error);
-                dispatch({ type: 'SET_NO_RECIPES_FOUND', payload: true });
+                dispatch({ type: DASHBOARD_ACTIONS.SET_NO_RECIPES_FOUND, payload: true });
             });
     }, []);
 
@@ -36,14 +37,14 @@ const DashboardPage = () => {
     };
 
     const clearFilters = () => {
-        dispatch({ type: 'CLEAR_FILTERS' });
+        dispatch({ type: DASHBOARD_ACTIONS.CLEAR_FILTERS });
     };
 
     return (
         <div className="dashboard dashboard-background">
             <div className="dashboard-header dashboardHeader-filter-spacing">
                 <h2>Recipe Dashboard</h2>
-                <p>Total Recipes: {state.recipes.length}</p>
+                <p>Total Recipes: {filteredRecipes.length}</p>
             </div>
             <div className="dashboardCategories-search">
                 <div className="dashboardCategories">
@@ -51,22 +52,23 @@ const DashboardPage = () => {
                     {CATEGORIES.map((category) => (
                         <button
                             key={category}
-                            onClick={() => dispatch({ type: 'SET_CATEGORY_FILTER', payload: category })}
+                            className={`filter ${state.categoryFilter === category ? 'selected' : ''}`}
+                            onClick={() => dispatch({ type: DASHBOARD_ACTIONS.SET_CATEGORY_FILTER, payload: category })}
                         >
                             {category}
                         </button>
                     ))}
-                    <button className="dashboardClear-filters" onClick={clearFilters}>Clear Filter</button>
+                    <button className="clear-filters" onClick={clearFilters}>Clear Filter</button>
                 </div>
                 <input
                     type="text"
                     placeholder="Search..."
                     value={state.search}
-                    onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
+                    onChange={(e) => dispatch({ type: DASHBOARD_ACTIONS.SET_SEARCH, payload: e.target.value })}
                 />
             </div>
-            {state.noRecipesFound ? (
-                <p>No recipes found</p>
+            {filteredRecipes.length === 0 ? (
+                <p className='dashboardRecipe-list-notFound'>No recipes found</p>
             ) : (
                 <RecipeList recipes={filteredRecipes} onViewDetails={handleViewDetails} />
             )}

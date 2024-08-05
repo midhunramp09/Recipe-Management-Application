@@ -51,7 +51,7 @@ const RecipeDetailsPage = () => {
         <div className="recipe-details-content">
           <h2>{state.selectedRecipe.title}</h2>
           <p className="category">
-            <span>Category: </span>{" "}
+            <span>Category: </span>
             <span className="category-data">
               {state.selectedRecipe.category}
             </span>
@@ -69,19 +69,19 @@ const RecipeDetailsPage = () => {
             ))}
           </ul>
           <p className="date">
-            <span>Date Added: </span>{" "}
+            <span>Date Added: </span>
             <span className="date-data">{state.selectedRecipe.date}</span>
           </p>
         </div>
         <div className="recipe-details-buttons">
-          <button className="back-button" onClick={handleBack}>
+          <button className="recipe-button back-button" onClick={handleBack}>
             Back
           </button>
           <div className="button-group">
-            <button className="edit-button" onClick={handleEdit}>
+            <button className="recipe-button edit-button" onClick={handleEdit}>
               Edit Recipe
             </button>
-            <button className="delete-button" onClick={handleDelete}>
+            <button className="recipe-button delete-button" onClick={handleDelete}>
               Delete Recipe
             </button>
           </div>

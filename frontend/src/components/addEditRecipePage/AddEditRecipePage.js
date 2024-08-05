@@ -3,13 +3,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useRecipe } from '../../services/contexts/RecipeContext';
 import '../../assets/styles/AddEditRecipe.css';
 import { createRecipe, updateRecipe } from '../../apis/RecipeApiCalls';
-import { addEditRecipeReducer, initialState, ADD_EDIT_RECIPE_ACTIONS } from '../../services/reducers/AddEditRecipeReducer';
+import { addEditRecipeReducer, initialState } from '../../services/reducers/AddEditRecipeReducer';
+import ADD_EDIT_RECIPE_ACTIONS from '../../services/actions/AddEditRecipeActions';
 
 const AddEditRecipePage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { selectedRecipe, setSelectedRecipe } = useRecipe();
     const [state, dispatch] = useReducer(addEditRecipeReducer, initialState);
+    const CATEGORIES = ['Breakfast', 'Lunch', 'Dinner', 'Dessert'];
 
     useEffect(() => {
         if (id && selectedRecipe) {
@@ -64,37 +66,44 @@ const AddEditRecipePage = () => {
         if (!validateForm()) {
             return;
         }
-
-        const updatedRecipe = {
+    
+        const recipeData = {
             title: state.title,
             category: state.category,
             ingredients: state.ingredients.split(', '),
             instructions: state.instructions.split(', '),
             date: state.date
         };
-
+    
+        const createNewRecipe = async () => {
+            try {
+                const response = await createRecipe(recipeData);
+                setSelectedRecipe(response.data);
+                navigate(`/recipe-details/${response.data.id}`);
+            } catch (error) {
+                console.error('Error creating recipe:', error);
+            }
+        };
+    
+        const updateExistingRecipe = async () => {
+            try {
+                const response = await updateRecipe(id, { ...recipeData, id: selectedRecipe.id });
+                setSelectedRecipe(response.data);
+                navigate(`/recipe-details/${id}`);
+            } catch (error) {
+                console.error('Error updating recipe:', error);
+            }
+        };
+    
         if (id) {
-            updateRecipe(id, updatedRecipe)
-                .then(response => {
-                    console.log('Recipe updated:', response.data);
-                    setSelectedRecipe(null);
-                    navigate('/dashboard');
-                })
-                .catch(error => console.error('Error updating recipe:', error));
+            updateExistingRecipe();
         } else {
-            createRecipe(updatedRecipe)
-                .then(response => {
-                    console.log('Recipe saved:', response.data);
-                    setSelectedRecipe(null);
-                    navigate('/dashboard');
-                })
-                .catch(error => console.error('Error saving recipe:', error));
+            createNewRecipe();
         }
     };
-
+    
     const handleCancel = () => {
-        setSelectedRecipe(null);
-        navigate('/dashboard');
+        navigate(-1);
     };
 
     return (
@@ -111,11 +120,17 @@ const AddEditRecipePage = () => {
                 </div>
                 <div className="addEditForm-group">
                     <label>Category:</label>
-                    <input
-                        type="text"
+                    <select
                         value={state.category}
                         onChange={(e) => dispatch({ type: ADD_EDIT_RECIPE_ACTIONS.SET_FIELD, field: 'category', value: e.target.value })}
-                    />
+                    >
+                        <option value="">Select a category</option>
+                        {CATEGORIES.map((category, index) => (
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
                     {state.errors.category && <p className="addEditError-message">{state.errors.category}</p>}
                 </div>
                 <div className="addEditForm-group">

@@ -5,6 +5,7 @@ import { RecipeProvider } from "../../services/contexts/RecipeContext";
 import UserAuthContext from "../../services/contexts/UserAuthContext";
 import AppRoutes from "../../routes/AppRoutes";
 import { AppReducer, initialState } from "../../services/reducers/AppReducer";
+import APP_ACTIONS from "../../services/actions/AppActions";
 
 function App() {
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -12,7 +13,7 @@ function App() {
   useEffect(() => {
     const loggedInDataInLocalStorage = localStorage.getItem("loggedIn");
     const loggedInData = loggedInDataInLocalStorage ? true : false;
-    dispatch({ type: "SET_LOGGED_IN", payload: loggedInData });
+    dispatch({ type: APP_ACTIONS.SET_LOGGED_IN, payload: loggedInData });
   }, []);
 
   return (
@@ -21,7 +22,7 @@ function App() {
         value={{
           loggedIn: state.loggedIn,
           setLoggedIn: (value) =>
-            dispatch({ type: "SET_LOGGED_IN", payload: value }),
+            dispatch({ type: APP_ACTIONS.SET_LOGGED_IN, payload: value }),
         }}
       >
         <RecipeProvider>

@@ -4,6 +4,7 @@ import { login } from '../../apis/RecipeApiCalls';
 import "../../assets/styles/Login.css";
 import UserAuthContext from '../../services/contexts/UserAuthContext';
 import { loginReducer, initialState } from '../../services/reducers/LoginReducer';
+import LOGIN_ACTIONS from '../../services/actions/LoginActions';
 
 const LoginPage = () => {
   const [state, dispatch] = useReducer(loginReducer, initialState);
@@ -13,7 +14,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     if (!username || !password) {
-      dispatch({ type: 'SET_ERROR', payload: 'Username and password are required' });
+      dispatch({ type: LOGIN_ACTIONS.SET_ERROR, payload: 'Username and password are required' });
       return;
     }
 
@@ -24,10 +25,10 @@ const LoginPage = () => {
         setLoggedIn(true);
         navigate('/dashboard');
       } else {
-        dispatch({ type: 'SET_ERROR', payload: 'Invalid username or password' });
+        dispatch({ type: LOGIN_ACTIONS.SET_ERROR, payload: 'Invalid username or password' });
       }
     } catch (err) {
-      dispatch({ type: 'SET_ERROR', payload: err.message });
+      dispatch({ type: LOGIN_ACTIONS.SET_ERROR, payload: err.message });
     }
   };
 
@@ -43,7 +44,7 @@ const LoginPage = () => {
             name="username"
             className="loginInput"
             value={username}
-            onChange={(e) => dispatch({ type: 'SET_USERNAME', payload: e.target.value })}
+            onChange={(e) => dispatch({ type: LOGIN_ACTIONS.SET_USERNAME, payload: e.target.value })}
           />
         </div>
         <div className="loginFormGroup">
@@ -54,7 +55,7 @@ const LoginPage = () => {
             name="password"
             className="loginInput"
             value={password}
-            onChange={(e) => dispatch({ type: 'SET_PASSWORD', payload: e.target.value })}
+            onChange={(e) => dispatch({ type: LOGIN_ACTIONS.SET_PASSWORD, payload: e.target.value })}
           />
         </div>
         {error && <p className="loginError">{error}</p>}
