@@ -38,7 +38,7 @@ const RecipeDetailsPage = () => {
         setSelectedRecipe(null);
         navigate("/dashboard");
       })
-      .catch((error) => console.error("Error deleting recipe:", error));
+      .catch((error) => console.log("Error deleting recipe:", error));
   };
 
   const handleBack = () => {
@@ -81,7 +81,10 @@ const RecipeDetailsPage = () => {
             <button className="recipe-button edit-button" onClick={handleEdit}>
               Edit Recipe
             </button>
-            <button className="recipe-button delete-button" onClick={handleDelete}>
+            <button
+              className="recipe-button delete-button"
+              onClick={handleDelete}
+            >
               Delete Recipe
             </button>
           </div>

@@ -18,9 +18,9 @@ const AppRoutes = (loggedIn) =>
           element: <LoginPage />,
         },
         {
-          path: '/500',
-          element: <LoggedInError />
-        }
+          path: "/500",
+          element: <LoggedInError />,
+        },
       ],
     },
     {

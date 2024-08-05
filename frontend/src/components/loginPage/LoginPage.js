@@ -1,10 +1,13 @@
-import React, { useContext, useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../apis/RecipeApiCalls';
+import React, { useContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../apis/RecipeApiCalls";
 import "../../assets/styles/Login.css";
-import UserAuthContext from '../../services/contexts/UserAuthContext';
-import { loginReducer, initialState } from '../../services/reducers/LoginReducer';
-import LOGIN_ACTIONS from '../../services/actions/LoginActions';
+import UserAuthContext from "../../services/contexts/UserAuthContext";
+import {
+  loginReducer,
+  initialState,
+} from "../../services/reducers/LoginReducer";
+import LOGIN_ACTIONS from "../../services/actions/LoginActions";
 
 const LoginPage = () => {
   const [state, dispatch] = useReducer(loginReducer, initialState);
@@ -14,18 +17,24 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     if (!username || !password) {
-      dispatch({ type: LOGIN_ACTIONS.SET_ERROR, payload: 'Username and password are required' });
+      dispatch({
+        type: LOGIN_ACTIONS.SET_ERROR,
+        payload: "Username and password are required",
+      });
       return;
     }
 
     try {
       const data = await login(username, password);
       if (data.authenticated) {
-        localStorage.setItem('loggedIn', true);
+        localStorage.setItem("loggedIn", true);
         setLoggedIn(true);
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
-        dispatch({ type: LOGIN_ACTIONS.SET_ERROR, payload: 'Invalid username or password' });
+        dispatch({
+          type: LOGIN_ACTIONS.SET_ERROR,
+          payload: "Invalid username or password",
+        });
       }
     } catch (err) {
       dispatch({ type: LOGIN_ACTIONS.SET_ERROR, payload: err.message });
@@ -44,7 +53,12 @@ const LoginPage = () => {
             name="username"
             className="loginInput"
             value={username}
-            onChange={(e) => dispatch({ type: LOGIN_ACTIONS.SET_USERNAME, payload: e.target.value })}
+            onChange={(e) =>
+              dispatch({
+                type: LOGIN_ACTIONS.SET_USERNAME,
+                payload: e.target.value,
+              })
+            }
           />
         </div>
         <div className="loginFormGroup">
@@ -55,11 +69,18 @@ const LoginPage = () => {
             name="password"
             className="loginInput"
             value={password}
-            onChange={(e) => dispatch({ type: LOGIN_ACTIONS.SET_PASSWORD, payload: e.target.value })}
+            onChange={(e) =>
+              dispatch({
+                type: LOGIN_ACTIONS.SET_PASSWORD,
+                payload: e.target.value,
+              })
+            }
           />
         </div>
         {error && <p className="loginError">{error}</p>}
-          <button className="loginButton" onClick={handleLogin}>Login</button>
+        <button className="loginButton" onClick={handleLogin}>
+          Login
+        </button>
       </div>
     </div>
   );

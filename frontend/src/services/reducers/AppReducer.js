@@ -1,4 +1,4 @@
-import APP_ACTIONS from '../actions/AppActions';
+import APP_ACTIONS from "../actions/AppActions";
 
 export const initialState = {
   loggedIn: false,

@@ -1,6 +1,6 @@
 import React from "react";
 import RecipeItem from "./RecipeItem";
-import '../../assets/styles/Dashboard.css'
+import "../../assets/styles/Dashboard.css";
 
 const RecipeList = ({ recipes, onViewDetails }) => {
   return (
