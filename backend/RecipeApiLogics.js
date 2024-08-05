@@ -3,15 +3,21 @@ const path = require("path");
 
 const FILE_PATH = path.join(__dirname, "recipe.json");
 
-// Load initial data from JSON file into an in-memory array
 let recipes = JSON.parse(fs.readFileSync(FILE_PATH, "utf8"));
 
-// Get all recipes
+const generateId = () => {
+  if (recipes.length === 0) {
+    return 1;
+  } else {
+    const newId = Math.max(...recipes.map((r) => r.id)) + 1;
+    return newId;
+  }
+};
+
 const getAllRecipes = (req, res) => {
   res.json(recipes);
 };
 
-// Get a single recipe by ID
 const getRecipeById = (req, res) => {
   const recipe = recipes.find((r) => r.id === parseInt(req.params.id, 10));
   if (recipe) {
@@ -21,14 +27,13 @@ const getRecipeById = (req, res) => {
   }
 };
 
-// Create a new recipe
 const createRecipe = (req, res) => {
-  const newRecipe = req.body;
+  const newRecipe = { ...req.body };
+  newRecipe.id = generateId();
   recipes.push(newRecipe);
   res.status(201).json(newRecipe);
 };
 
-// Update a recipe
 const updateRecipe = (req, res) => {
   const updatedRecipe = req.body;
   const index = recipes.findIndex((r) => r.id === parseInt(req.params.id, 10));
@@ -41,11 +46,10 @@ const updateRecipe = (req, res) => {
   }
 };
 
-// Delete a recipe
 const deleteRecipe = (req, res) => {
   const id = parseInt(req.params.id, 10);
   recipes = recipes.filter((r) => r.id !== id);
-  res.status(204).send(); // Send no content status
+  res.status(204).send();
 };
 
 module.exports = {
