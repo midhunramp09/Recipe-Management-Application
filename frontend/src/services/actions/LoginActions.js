@@ -1,0 +1,7 @@
+const LOGIN_ACTIONS = {
+    SET_USERNAME:'SET_USERNAME',
+    SET_PASSWORD:'SET_PASSWORD',
+    SET_ERROR:'SET_ERROR'
+  };
+  
+  export default LOGIN_ACTIONS;

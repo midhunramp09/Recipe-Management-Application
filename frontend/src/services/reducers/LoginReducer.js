@@ -1,4 +1,4 @@
-// src/reducers/LoginReducer.js
+import LOGIN_ACTIONS from "../actions/LoginActions";
 
 export const initialState = {
     username: '',
@@ -8,11 +8,11 @@ export const initialState = {
   
   export const loginReducer = (state, action) => {
     switch (action.type) {
-      case 'SET_USERNAME':
+      case LOGIN_ACTIONS.SET_USERNAME:
         return { ...state, username: action.payload };
-      case 'SET_PASSWORD':
+      case LOGIN_ACTIONS.SET_PASSWORD:
         return { ...state, password: action.payload };
-      case 'SET_ERROR':
+      case LOGIN_ACTIONS.SET_ERROR:
         return { ...state, error: action.payload };
       default:
         return state;

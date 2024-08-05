@@ -1,3 +1,5 @@
+import ADD_EDIT_RECIPE_ACTIONS from '../actions/AddEditRecipeActions';
+
 const initialState = {
     title: '',
     category: '',
@@ -11,12 +13,6 @@ const initialState = {
         instructions: '',
         date: ''
     }
-};
-
-const ADD_EDIT_RECIPE_ACTIONS = {
-    SET_FIELD: 'SET_FIELD',
-    SET_ERRORS: 'SET_ERRORS',
-    RESET_FORM: 'RESET_FORM'
 };
 
 const addEditRecipeReducer = (state, action) => {
@@ -38,4 +34,4 @@ const addEditRecipeReducer = (state, action) => {
     }
 };
 
-export { initialState, addEditRecipeReducer, ADD_EDIT_RECIPE_ACTIONS };
+export { initialState, addEditRecipeReducer };
