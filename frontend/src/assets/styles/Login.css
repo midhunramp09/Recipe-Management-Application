@@ -7,8 +7,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f5f5f5;
-  padding: 0; /* Ensure no padding affects alignment */
 }
 
 .loginContainer::before {
@@ -27,8 +25,8 @@
 
 .loginTitle {
   margin-bottom: 20px;
-  font-size: 2rem;
-  color: #333;
+  font-size: 1.5rem;
+  color: #000;
 }
 
 .loginForm {
@@ -40,14 +38,14 @@
   background-color: rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 1;
-  margin: 0; /* Ensure no margin affects alignment */
+  margin: 0;
 }
 
 .loginFormGroup {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
-  width: 100%; /* Ensure full width */
+  width: 100%;
 }
 
 .loginFormGroup label {
@@ -55,7 +53,8 @@
   margin-bottom: 5px;
   font-weight: normal;
   text-align: left;
-  color: #ffffff;
+  color: #fff;
+  font-size: large;
 }
 
 .loginInput {
@@ -64,7 +63,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 0 10px;
-  box-sizing: border-box; /* Ensure padding does not affect width */
+  box-sizing: border-box;
 }
 
 .loginError {
@@ -76,7 +75,7 @@
   width: 30%;
   height: 40px;
   background-color: #28a745;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;

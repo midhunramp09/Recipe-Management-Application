@@ -12,19 +12,40 @@
 .main-header h1 {
     flex: 1;
     font-size: 1.5rem;
+    font-weight: bolder;
+    color: #000;
 }
 
 .main-nav {
     display: flex;
+    align-items: center;
     gap: 1rem;
 }
 
 .main-nav a {
     text-decoration: none;
     color: #007bff;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .main-nav a.active {
     font-weight: bold;
+    color: #0056b3;
+}
+
+.main-nav button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0;
+}
+
+.main-nav button:hover {
     color: #0056b3;
 }
