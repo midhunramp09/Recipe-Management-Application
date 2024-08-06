@@ -2,7 +2,7 @@ const { gql } = require('graphql-tag');
 
 const recipeSchema = gql`
   type Recipe {
-    id: ID!
+    id: Int!
     title: String!
     category: String!
     ingredients: [String!]!
@@ -12,13 +12,13 @@ const recipeSchema = gql`
 
   type Query {
     recipes: [Recipe!]!
-    recipe(id: ID!): Recipe
+    recipe(id: Int!): Recipe
   }
 
   type Mutation {
     createRecipe(title: String!, category: String!, ingredients: [String!]!, instructions: [String!]!, date: String!): Recipe
-    updateRecipe(id: ID!, title: String, category: String, ingredients: [String], instructions: [String], date: String): Recipe
-    deleteRecipe(id: ID!): Boolean
+    updateRecipe(id: Int!, title: String, category: String, ingredients: [String], instructions: [String], date: String): Recipe
+    deleteRecipe(id: Int!): Boolean
   }
 `;
 

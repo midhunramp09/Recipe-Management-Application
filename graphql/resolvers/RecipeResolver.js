@@ -18,7 +18,7 @@ const recipeResolver = {
       return response.data;
     },
     updateRecipe: async (_, { id, title, category, ingredients, instructions, date }) => {
-      const response = await axios.put(`${API_URL}/recipes/${id}`, { title, category, ingredients, instructions, date });
+      const response = await axios.put(`${API_URL}/recipes/${id}`, { id, title, category, ingredients, instructions, date });
       return response.data;
     },
     deleteRecipe: async (_, { id }) => {
