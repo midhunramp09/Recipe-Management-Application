@@ -3,17 +3,17 @@
     "id": 1,
     "title": "Pancakes",
     "category": "Breakfast",
-    "ingredients": ["Spaghetti", "Ground beef", "Tomato sauce"],
-    "instructions": ["Boil spaghetti", "Cook beef", "Mix with sauce"],
+    "ingredients": ["Milk", "Eggs", "Butter", "Honey"],
+    "instructions": ["Mix milk, eggs, & Butter", "Cook on hot surface like griddle", "Serve with honey"],
     "date": "2024-07-23"
   },
   {
     "id": 2,
     "title": "Chicken Salad",
     "category": "Lunch",
-    "ingredients": ["Spaghetti", "Ground beef", "Tomato sauce"],
-    "instructions": ["Boil spaghetti", "Cook beef", "Mix with sauce"],
-    "date": "2024-07-23"
+    "ingredients": ["Mayonnaise", "Celery", "Chicken"],
+    "instructions": ["Prepare celery", "Cook chicken", "Serve with mayonnaise"],
+    "date": "2024-07-27"
   },
   {
     "id": 3,
@@ -21,6 +21,14 @@
     "category": "Dinner",
     "ingredients": ["Spaghetti", "Ground beef", "Tomato sauce"],
     "instructions": ["Boil spaghetti", "Cook beef", "Mix with sauce"],
-    "date": "2024-07-23"
+    "date": "2024-08-01"
+  },
+  {
+    "id": 4,
+    "title": "Ice Cream",
+    "category": "Dessert",
+    "ingredients": ["Cream", "Vanilla Beans", "Sugar"],
+    "instructions": ["Heat the cream, vanilla beans & sugar in a medium heat", "After the sugar melts, pour the cream mixture in ice-cream maker", "Serve it"],
+    "date": "2024-08-01"
   }
 ]
