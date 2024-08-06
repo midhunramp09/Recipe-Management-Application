@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const FILE_PATH = path.join(__dirname, "recipe.json");
+const FILE_PATH = path.join(__dirname, "public", "recipes.json");
 
 let recipes = JSON.parse(fs.readFileSync(FILE_PATH, "utf8"));
 
