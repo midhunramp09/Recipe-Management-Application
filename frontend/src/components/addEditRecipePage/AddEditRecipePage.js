@@ -2,12 +2,14 @@ import React, { useReducer, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecipe } from "../../services/contexts/RecipeContext";
 import "../../assets/styles/AddEditRecipe.css";
-import { createRecipe, updateRecipe } from "../../apis/RecipeApiCalls";
+import { useMutation } from "@apollo/client";
 import {
   addEditRecipeReducer,
   initialState,
 } from "../../services/reducers/AddEditRecipeReducer";
 import ADD_EDIT_RECIPE_ACTIONS from "../../services/actions/AddEditRecipeActions";
+import { CREATE_RECIPE, UPDATE_RECIPE } from "../../apis/RecipeGraphQLQueries";
+import GraphqlClient from "../../apis/ApolloClient";
 
 const AddEditRecipePage = () => {
   const { id } = useParams();
@@ -15,6 +17,8 @@ const AddEditRecipePage = () => {
   const { selectedRecipe, setSelectedRecipe } = useRecipe();
   const [state, dispatch] = useReducer(addEditRecipeReducer, initialState);
   const CATEGORIES = ["Breakfast", "Lunch", "Dinner", "Dessert"];
+  const [createRecipe, { data: createData, error: createError }] = useMutation(CREATE_RECIPE, { client: GraphqlClient });
+  const [updateRecipe, { data: updateData, error: updateError }] = useMutation(UPDATE_RECIPE, { client: GraphqlClient });
 
   useEffect(() => {
     if (id && selectedRecipe) {
@@ -85,7 +89,7 @@ const AddEditRecipePage = () => {
     return valid;
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!validateForm()) {
       return;
     }
@@ -98,33 +102,41 @@ const AddEditRecipePage = () => {
       date: state.date,
     };
 
-    const createNewRecipe = async () => {
-      try {
-        const response = await createRecipe(recipeData);
-        setSelectedRecipe(response.data);
-        navigate(`/recipe-details/${response.data.id}`);
-      } catch (error) {
-        console.log("Error creating recipe:", error);
-      }
-    };
-
-    const updateExistingRecipe = async () => {
-      try {
-        const response = await updateRecipe(id, {
-          ...recipeData,
-          id: selectedRecipe.id,
+    try {
+      if (id) {
+        await updateRecipe({
+          variables: {
+            id:  selectedRecipe.id,
+            ...recipeData,
+          },
         });
-        setSelectedRecipe(response.data);
-        navigate(`/recipe-details/${id}`);
-      } catch (error) {
-        console.log("Error updating recipe:", error);
-      }
-    };
 
-    if (id) {
-      updateExistingRecipe();
-    } else {
-      createNewRecipe();
+        if (updateData) {
+          setSelectedRecipe(updateData.updateRecipe);
+          navigate(`/recipe-details/${id}`);
+        }
+
+        else if (updateError) {
+          console.error("Error updating recipe:", updateError);
+        }
+      } else {
+        await createRecipe({
+          variables: {
+            ...recipeData,
+          },
+        });
+
+        if (createData) {
+          setSelectedRecipe(createData.createRecipe);
+          navigate(`/recipe-details/${createData.createRecipe.id}`);
+        }
+
+        else if (createError) {
+          console.error("Error creating recipe:", createError);
+        }
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
     }
   };
 

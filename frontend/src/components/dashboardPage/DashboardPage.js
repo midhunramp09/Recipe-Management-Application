@@ -3,34 +3,37 @@ import { useNavigate } from "react-router-dom";
 import RecipeList from "./RecipeList";
 import { useRecipe } from "../../services/contexts/RecipeContext";
 import "../../assets/styles/Dashboard.css";
-import { getRecipes } from "../../apis/RecipeApiCalls";
+import { useQuery } from '@apollo/client';
+import GraphqlClient from '../../apis/ApolloClient';
 import {
   initialState,
   dashboardReducer,
 } from "../../services/reducers/DashboardReducer";
 import DASHBOARD_ACTIONS from "../../services/actions/DashboardActions";
+import { GET_RECIPES } from '../../apis/RecipeGraphQLQueries';
 
 const DashboardPage = () => {
   const [state, dispatch] = useReducer(dashboardReducer, initialState);
   const navigate = useNavigate();
   const { setSelectedRecipe } = useRecipe();
   const CATEGORIES = ["Breakfast", "Lunch", "Dinner", "Dessert"];
+  const { data, error } = useQuery(GET_RECIPES, { client: GraphqlClient });
+
   useEffect(() => {
-    getRecipes()
-      .then((response) => {
-        dispatch({
-          type: DASHBOARD_ACTIONS.SET_RECIPES,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log("Error fetching recipes:", error);
-        dispatch({
-          type: DASHBOARD_ACTIONS.SET_NO_RECIPES_FOUND,
-          payload: true,
-        });
+    if (data) {
+      dispatch({
+        type: DASHBOARD_ACTIONS.SET_RECIPES,
+        payload: data.recipes,
       });
-  }, []);
+    }
+    if (error) {
+      console.log("Error fetching recipes:", error);
+      dispatch({
+        type: DASHBOARD_ACTIONS.SET_NO_RECIPES_FOUND,
+        payload: true,
+      });
+    }
+  }, [data, error]);
 
   const filteredRecipes = state.recipes.filter(
     (recipe) =>

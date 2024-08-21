@@ -2,11 +2,13 @@ import React, { useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecipe } from "../../services/contexts/RecipeContext";
 import "../../assets/styles/RecipeDetails.css";
-import { deleteRecipe } from "../../apis/RecipeApiCalls";
+import { useMutation } from "@apollo/client";
+import { DELETE_RECIPE } from "../../apis/RecipeGraphQLQueries";
 import {
   initialRecipeDetailsState,
   recipeDetailsReducer,
 } from "../../services/reducers/RecipeDetailsReducer";
+import GraphqlClient from "../../apis/ApolloClient";
 
 const RecipeDetailsPage = () => {
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ const RecipeDetailsPage = () => {
     recipeDetailsReducer,
     initialRecipeDetailsState
   );
+
+  const [deleteRecipe, { data: deleteData, error: deleteError }] = useMutation(DELETE_RECIPE, {client: GraphqlClient});
 
   useEffect(() => {
     if (selectedRecipe) {
@@ -30,15 +34,20 @@ const RecipeDetailsPage = () => {
     navigate(`/add-edit-recipe/${state.selectedRecipe.id}`);
   };
 
-  const handleDelete = () => {
-    deleteRecipe(state.selectedRecipe.id)
-      .then(() => {
+  const handleDelete = async () => {
+    try {
+      await deleteRecipe({ variables: { id: state.selectedRecipe.id } });
+      if (deleteData) {
         console.log("Recipe deleted");
         dispatch({ type: "CLEAR_SELECTED_RECIPE" });
         setSelectedRecipe(null);
         navigate("/dashboard");
-      })
-      .catch((error) => console.log("Error deleting recipe:", error));
+      } else if (deleteError) {
+        console.log("GraphQL Error:", deleteError.message);
+      }
+    } catch (error) {
+      console.log("Error deleting recipe:", error);
+    }
   };
 
   const handleBack = () => {
